@@ -1,0 +1,6 @@
+From alpine
+ARG APP_NAME
+ENV APP_NAME ${APP_NAME}
+WORKDIR /app
+COPY ./bin/${APP_NAME} /app/${APP_NAME}
+ENTRYPOINT /app/$APP_NAME
