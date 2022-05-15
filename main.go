@@ -114,7 +114,7 @@ func disconnect() {
 
 func notificationHandler(req []byte) {
 	if len(req) == 18 {
-		temperature = float32(req[7]) / 10
+		temperature = float32(int32(req[6])<<8+int32(req[7])) / 10
 		tvoc = float32(int32(req[10])<<8+int32(req[11])) / 1000
 		hcho = float32(int32(req[12])<<8+int32(req[13])) / 1000
 		co2 = int32(req[16])<<8 + int32(req[17]) - 150
