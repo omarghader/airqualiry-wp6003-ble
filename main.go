@@ -48,6 +48,12 @@ func main() {
 		os.Exit(0)
 	}()
 
+	go func() {
+		<-client.Disconnected()
+		fmt.Printf("[ %s ] is disconnected \n", client.Address())
+		panic("stop because disconnecting")
+	}()
+
 	if u := profile.Find(ble.NewCharacteristic(charUUID)); u != nil {
 		err := client.Subscribe(u.(*ble.Characteristic), false, notificationHandler)
 		if err != nil {

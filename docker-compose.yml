@@ -1,0 +1,12 @@
+version: "3.5"
+
+services:
+  airquality:
+    image: omarghader/airquality
+    container_name: airquality
+    restart: "unless-stopped"
+    privileged: true
+    network_mode: host
+    entrypoint: /app/airquality
+    command:
+      - -addr=XX:XX:XX:XX:XX:XX
