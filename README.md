@@ -15,7 +15,7 @@ ESP32 version is on my blog : [https://omarghader.github.io/esp32-airquality-box
 ## Requirements
 
 - Airbox WP6003 Bluetooth : [Buy here from aliexpress](https://s.click.aliexpress.com/e/_AMEXyX)
-- Airbox WP6003 Bluetooth : [Buy here from amazon](https://shorturl.servebeer.com/n/airquality-wp6003)
+- Airbox WP6003 Bluetooth : [Buy here from amazon https://fij.li/airquality-wp6003](https://fij.li/airquality-wp6003)
 
 ## How to build
 
