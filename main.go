@@ -18,12 +18,12 @@ import (
 )
 
 var (
-	addr = flag.String("addr", "", "address of remote peripheral (MAC on Linux, UUID on OS X)")
-	bind = flag.String("bind", ":6161", "the address to bind the http server")
-
-	charUUID = ble.Reverse([]byte{0xff, 0xf4})
-	client   ble.Client
-	profile  *ble.Profile
+	addr      = flag.String("addr", "", "address of remote peripheral (MAC on Linux, UUID on OS X)")
+	bind      = flag.String("bind", ":6161", "the address to bind the http server")
+	calibrate = flag.Bool("calibrate", false, "to calibrate the box")
+	charUUID  = ble.Reverse([]byte{0xff, 0xf4})
+	client    ble.Client
+	profile   *ble.Profile
 
 	temperature float32
 	co2         int32
@@ -53,6 +53,13 @@ func main() {
 		fmt.Printf("[ %s ] is disconnected \n", client.Address())
 		panic("stop because disconnecting")
 	}()
+
+	// if Calibrate, send command and exit
+	if *calibrate {
+		Calibrate()
+		return
+		// exit here
+	}
 
 	if u := profile.Find(ble.NewCharacteristic(charUUID)); u != nil {
 		err := client.Subscribe(u.(*ble.Characteristic), false, notificationHandler)
@@ -126,4 +133,11 @@ func notificationHandler(req []byte) {
 		co2 = int32(req[16])<<8 + int32(req[17]) - 150
 		log.Printf("%f %f %f %d\n", temperature, tvoc, hcho, co2)
 	}
+}
+
+func Calibrate() {
+	handleSensorWrite, _ := ble.Parse("fff1")
+	hndl10 := profile.Find(ble.NewCharacteristic(handleSensorWrite))
+
+	client.WriteCharacteristic(hndl10.(*ble.Characteristic), []byte{0xad}, true)
 }

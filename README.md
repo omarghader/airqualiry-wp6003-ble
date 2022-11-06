@@ -40,3 +40,9 @@ make build-arm64 compress docker-build-arm64
 ```sh
 ./bin/airquality -addr=XX:XX:XX:XX:XX:XX
 ```
+
+## Calibrate
+
+```sh
+./bin/airquality -addr=XX:XX:XX:XX:XX:XX -calibrate
+```
